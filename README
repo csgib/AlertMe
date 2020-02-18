@@ -1,0 +1,20 @@
+ALERT'ME 
+
+Ce petit programme permet d'échanger des messages textes sur un réseau local
+Chaque poste fait office de serveur et de client.
+
+Dans le dossier de votre binaire pensez à insérer un fichier config.ini contenant :
+
+HST_DATA=http://192.xxx.xxx.xxx/toto.txt      <--- Nom d'un fichier txt contenant des associations IP -> Nom d'utilisateur
+SRV_PORT=1976 				      <--- Le port TCP sur lequel vous voulez que le programme écoute diffuse
+
+Le fichier txt contenant les associations doit être sous la forme :
+192.168.186.5|xxxxxxx Stéphane;
+192.168.186.7|yyyyyyy Ludovic;
+
+Le fichier txt sert à limiter le nombre d'émission sur votre réseau mais également à permettre la communication poste à poste et non uniquement sur l'ensemble de votre réseau.
+
+Si vous n'avez pas de fichier txt a télécharger contenant ces infos, le programme diffusera son message sur votre réseau / 24.
+
+Ce programme est distribué sous licence GPL.
+

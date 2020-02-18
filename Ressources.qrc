@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>Images/icon.png</file>
+        <file>Images/srv_nok.png</file>
+        <file>Images/srv_ok.png</file>
+        <file>Images/icon_off.png</file>
+        <file>Images/restartico.png</file>
+        <file>Images/showico.png</file>
+        <file>Images/fire.png</file>
+        <file>Images/intrusion.png</file>
+        <file>alarm.wav</file>
+        <file>alarm2.wav</file>
+        <file>Images/exit.png</file>
+        <file>Images/send.png</file>
+        <file>Images/alarma.png</file>
+    </qresource>
+</RCC>
