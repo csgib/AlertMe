@@ -1,6 +1,7 @@
 #include "alert_dialog.h"
 #include "ui_alert_dialog.h"
 #include "frame_th_trans.h"
+#include <QDateTime>
 
 alert_dialog::alert_dialog(QWidget *parent) :
     QDialog(parent),
@@ -19,7 +20,7 @@ alert_dialog::~alert_dialog()
 
 void alert_dialog::setalerttxt(QString wl_txt)
 {
-    ui->alert_dialog_txt->setText(wl_txt);
+    ui->alert_dialog_txt->setText(wl_txt + "\n" + QDateTime::currentDateTime().toString("dddd dd MMMM yyyy hh:mm:ss"));
     if ( logo_warning->is_visible == false )
     {
         logo_warning->is_visible = true;

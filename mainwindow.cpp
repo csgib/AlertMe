@@ -247,7 +247,6 @@ void MainWindow::srv_readyRead()
 {
     QByteArray ba = server_socket->readAll();
     QByteArray mystring = "TOK";
-    qDebug() << ba;
     QString wl_txt_display = QString::fromLatin1(ba);
     server_socket->write(mystring);
     server_socket->flush();
