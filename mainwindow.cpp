@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QSound>
+#include <QInputDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "alert_dialog.h"
@@ -13,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    wg_admin_pwd = "admin";
+
     sound_alarm = new QSound(":/new/prefix1/alarm.wav");
     sound_pinpon = new QSound(":/new/prefix1/alarm2.wav");
 
@@ -163,10 +166,11 @@ void MainWindow::httpDownloadFinished()
         ui->label_arp_ok->setText("Aucune donnée. Balayage plage IP.");
     }
 
-    if ( ui->My_Combo_IP->count() < 1 )
-    {
-        ui->Mybt_admin->setDisabled(true);
-    }
+    ui->txttosend_free->setDisabled(true);
+    ui->txttosend->setDisabled(true);
+    ui->My_Combo_IP->setDisabled(true);
+    ui->Mybt_free->setDisabled(true);
+    ui->Mybt_admin->setDisabled(true);
 }
 
 // *** PARTIE SERVEUR ***
@@ -548,4 +552,22 @@ void MainWindow::on_Mybt_free_clicked()
     ui->Pb_send->setMinimum(0);
     ui->Pb_send->setMaximum(wg_loop_max-1);
     loop_message();
+}
+
+void MainWindow::on_Bt_admin_clicked()
+{
+    bool ok;
+    QString wl_passwd = QInputDialog::getText(this, "ACCES FONCTIONS ADMIN", "Code administrateur :", QLineEdit::Normal, "", &ok);
+    if ( ok && !wl_passwd.isEmpty() && wl_passwd == wg_admin_pwd )
+    {
+        ui->txttosend_free->setEnabled(true);
+        ui->Mybt_free->setEnabled(true);
+        if ( ui->My_Combo_IP->count() > 0 )
+        {
+            ui->txttosend->setEnabled(true);
+            ui->My_Combo_IP->setEnabled(true);
+            ui->Mybt_admin->setDisabled(true);
+        }
+        ui->Bt_admin->setDisabled(true);
+    }
 }

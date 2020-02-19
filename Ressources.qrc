@@ -13,5 +13,6 @@
         <file>Images/exit.png</file>
         <file>Images/send.png</file>
         <file>Images/alarma.png</file>
+        <file>Images/lock.png</file>
     </qresource>
 </RCC>

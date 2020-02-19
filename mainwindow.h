@@ -88,12 +88,16 @@ private slots:
 
     void on_Mybt_free_clicked();
 
+    void on_Bt_admin_clicked();
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *trayIcon;
 
     QNetworkAccessManager *manager;
     QNetworkReply *reply;
+
+    QString wg_admin_pwd;
 };
 
 #endif // MAINWINDOW_H

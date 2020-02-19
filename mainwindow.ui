@@ -33,9 +33,9 @@
    <widget class="QPushButton" name="Bt_close_ui">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>400</x>
       <y>410</y>
-      <width>181</width>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -430,6 +430,23 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="wordWrap">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Bt_admin">
+    <property name="geometry">
+     <rect>
+      <x>364</x>
+      <y>410</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Ressources.qrc">
+      <normaloff>:/new/prefix1/Images/lock.png</normaloff>:/new/prefix1/Images/lock.png</iconset>
     </property>
    </widget>
   </widget>
