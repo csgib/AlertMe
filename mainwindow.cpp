@@ -224,8 +224,8 @@ void MainWindow::restart_server()
 
 void MainWindow::new_srv_connect()
 {
-    ui->My_logs->appendHtml("CONNECTION ENTERING ....");
     server_socket = mytcpsrv->nextPendingConnection();
+    ui->My_logs->appendHtml("CONNECTION ENTERING ...." + server_socket->peerAddress().toString());
     connect(server_socket, SIGNAL(connected()),this, SLOT(srv_connected()));
     connect(server_socket, SIGNAL(disconnected()),this, SLOT(srv_disconnected()));
     connect(server_socket, SIGNAL(bytesWritten(qint64)),this, SLOT(srv_bytesWritten(qint64)));
