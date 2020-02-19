@@ -566,7 +566,7 @@ void MainWindow::on_Bt_admin_clicked()
         {
             ui->txttosend->setEnabled(true);
             ui->My_Combo_IP->setEnabled(true);
-            ui->Mybt_admin->setDisabled(true);
+            ui->Mybt_admin->setEnabled(true);
         }
         ui->Bt_admin->setDisabled(true);
     }
