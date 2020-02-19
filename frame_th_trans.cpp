@@ -14,8 +14,6 @@ frame_th_trans::frame_th_trans ( QWidget * parent )
     o = 1;
 
     is_visible = false;
-
-    render_prev();
 }
 
 void frame_th_trans::render_prev()
