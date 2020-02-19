@@ -20,11 +20,13 @@ alert_dialog::~alert_dialog()
 void alert_dialog::setalerttxt(QString wl_txt)
 {
     ui->alert_dialog_txt->setText(wl_txt);
+    logo_warning->is_visible = true;
+    logo_warning->render_prev();
 }
 
 void alert_dialog::on_pushButton_clicked()
 {
-
+    logo_warning->is_visible = false;
     this->hide();
 }
 

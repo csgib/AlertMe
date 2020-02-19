@@ -13,30 +13,35 @@ frame_th_trans::frame_th_trans ( QWidget * parent )
     h = 190;
     o = 1;
 
+    is_visible = false;
+
     render_prev();
 }
 
 void frame_th_trans::render_prev()
 {
-    if ( x < 0 )
+    if ( is_visible == true )
     {
-        x = 60;
-        y = 60;
-        w = 190;
-        h = 190;
-        o = 1.0;
-    }
-    else
-    {
-        o = o - 0.017;
-        x = x - 1;
-        y = y - 1;
-        w = w + 2;
-        h = h + 2;
-    }
+        if ( x < 0 )
+        {
+            x = 60;
+            y = 60;
+            w = 190;
+            h = 190;
+            o = 1.0;
+        }
+        else
+        {
+            o = o - 0.017;
+            x = x - 1;
+            y = y - 1;
+            w = w + 2;
+            h = h + 2;
+        }
 
-    QTimer::singleShot((60-x)/2, this, SLOT(render_prev()));
-    this->repaint();
+        QTimer::singleShot((60-x)/2, this, SLOT(render_prev()));
+        this->repaint();
+    }
 }
 
 

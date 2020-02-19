@@ -10,6 +10,8 @@ class frame_th_trans : public QFrame
                 int x,y,w,h;
                 qreal o;
                 QImage dstImage;
+
+                bool is_visible;
 	public:
 	private:
 	signals:
