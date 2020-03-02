@@ -5,7 +5,6 @@
 #include <QTcpServer>
 #include <QStyleFactory>
 #include <QLockFile>
-#include <QMessageBox>
 
 int main(int argc, char *argv[])
 {

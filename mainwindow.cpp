@@ -141,6 +141,11 @@ MainWindow::MainWindow(QWidget *parent)
                 this, SLOT(httpDownloadFinished()));
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+}
+
 void MainWindow::httpDownloadFinished()
 {
     if( reply->error() == QNetworkReply::NoError )

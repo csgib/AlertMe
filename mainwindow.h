@@ -90,6 +90,9 @@ private slots:
 
     void on_Bt_admin_clicked();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *trayIcon;
@@ -98,6 +101,7 @@ private:
     QNetworkReply *reply;
 
     QString wg_admin_pwd;
+
 };
 
 #endif // MAINWINDOW_H
