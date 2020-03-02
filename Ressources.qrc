@@ -14,5 +14,7 @@
         <file>Images/send.png</file>
         <file>Images/alarma.png</file>
         <file>Images/lock.png</file>
+        <file>Images/configuration.png</file>
+        <file>Images/save.png</file>
     </qresource>
 </RCC>

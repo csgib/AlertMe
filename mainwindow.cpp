@@ -63,11 +63,13 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "FICHIER DE CONFIGURATION INTROUVABLE";
         wg_conf_host_data = "127.0.0.1";
         wg_local_port = "1976";
+        wg_open_start = "0";
     }
     else
     {
         wg_local_port = "";
         wg_conf_host_data = "";
+        wg_open_start = "0";
 
         while (!file.atEnd())
         {
@@ -83,6 +85,11 @@ MainWindow::MainWindow(QWidget *parent)
             if ( wl_conf_txt.left(8) == "SRV_PORT" )
             {
                 wg_local_port = wl_conf_txt.right(wl_conf_txt.length()-9);
+            }
+
+            if ( wl_conf_txt.left(8) == "OPE_STRT" )
+            {
+                wg_open_start = wl_conf_txt.right(wl_conf_txt.length()-9);
             }
         }
 
@@ -171,11 +178,28 @@ void MainWindow::httpDownloadFinished()
         ui->label_arp_ok->setText("Aucune donnée. Balayage plage IP.");
     }
 
+    if ( wg_open_start == "1" )
+    {
+
+    }
+
     ui->txttosend_free->setDisabled(true);
     ui->txttosend->setDisabled(true);
     ui->My_Combo_IP->setDisabled(true);
     ui->Mybt_free->setDisabled(true);
     ui->Mybt_admin->setDisabled(true);
+
+
+    // *** AFFICHAGE DE LA FENETRE SI CONFIG LE PRECISE ***
+    if ( wg_open_start == "1" )
+    {
+        ui->Check_open_start->setChecked(true);
+        MainWindow::show();
+    }
+    else
+    {
+        ui->Check_open_start->setChecked(false);
+    }
 }
 
 // *** PARTIE SERVEUR ***
@@ -574,5 +598,56 @@ void MainWindow::on_Bt_admin_clicked()
             ui->Mybt_admin->setEnabled(true);
         }
         ui->Bt_admin->setDisabled(true);
+    }
+}
+
+void MainWindow::on_Mybt_saveconfig_clicked()
+{
+    // *** LECTURE FICHIER CONFIGURATION ***
+    QFile file(QCoreApplication::applicationDirPath() + "/config.ini");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setText("Fichier de configuration introuvable ou vérouillé.");
+        msgBox.exec();
+    }
+    else
+    {
+        QString wl_file_content = "";
+        while (!file.atEnd())
+        {
+            QByteArray line_conf = file.readLine();
+            QString wl_conf_txt = QString::fromLatin1(line_conf);
+
+            if ( wl_conf_txt.left(8) != "OPE_STRT" )
+            {
+                wl_file_content += wl_conf_txt;
+            }
+        }
+
+        file.close();
+
+        if ( ui->Check_open_start->isChecked() )
+        {
+            wl_file_content += "OPE_STRT=1\n";
+        }
+        else
+        {
+            wl_file_content += "OPE_STRT=0\n";
+        }
+
+        if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QMessageBox msgBox;
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.setText("Fichier de configuration introuvable ou vérouillé.");
+            msgBox.exec();
+        }
+        else
+        {
+            QTextStream out(&file);
+            out << wl_file_content;
+        }
     }
 }

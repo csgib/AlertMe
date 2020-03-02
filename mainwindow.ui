@@ -399,6 +399,48 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="icon">
+      <iconset resource="Ressources.qrc">
+       <normaloff>:/new/prefix1/Images/configuration.png</normaloff>:/new/prefix1/Images/configuration.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Configuration</string>
+     </attribute>
+     <widget class="QCheckBox" name="Check_open_start">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>511</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ouvrir la fenêtre de l'application au démarrage</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Mybt_saveconfig">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>280</y>
+        <width>507</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Enregistrer la configuration</string>
+      </property>
+      <property name="icon">
+       <iconset resource="Ressources.qrc">
+        <normaloff>:/new/prefix1/Images/save.png</normaloff>:/new/prefix1/Images/save.png</iconset>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QLabel" name="Icon_server_status">
     <property name="geometry">

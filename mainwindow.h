@@ -39,6 +39,7 @@ public:
     QString wg_username;
     QString wg_full_ip;
     QString wg_ip_svq;
+    QString wg_open_start;
 
     QString wg_conf_host_data;
     QString wg_local_port;
@@ -89,6 +90,8 @@ private slots:
     void on_Mybt_free_clicked();
 
     void on_Bt_admin_clicked();
+
+    void on_Mybt_saveconfig_clicked();
 
 protected:
     void closeEvent(QCloseEvent *event);

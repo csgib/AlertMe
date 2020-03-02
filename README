@@ -7,6 +7,7 @@ Dans le dossier de votre binaire pensez à insérer un fichier config.ini conten
 
 HST_DATA=http://192.xxx.xxx.xxx/toto.txt      <--- Nom d'un fichier txt contenant des associations IP -> Nom d'utilisateur
 SRV_PORT=1976 				      <--- Le port TCP sur lequel vous voulez que le programme écoute diffuse
+OPE_STRT=1				      <--- Permet de spécifier si la fenêtre doit être ouverte au lancement de l'application
 
 Le fichier txt contenant les associations doit être sous la forme :
 192.168.186.5|xxxxxxx Stéphane;
