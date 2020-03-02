@@ -4,17 +4,29 @@
 #include <QtNetwork>
 #include <QTcpServer>
 #include <QStyleFactory>
+#include <QLockFile>
+#include <QMessageBox>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    QApplication::setStyle(QStyleFactory::create("Fusion"));
-    MainWindow w;
-    w.setWindowFlags ( Qt::CustomizeWindowHint | Qt::WindowTitleHint);
-    w.hide();
+    QString tmpDir = QDir::tempPath();
+    QLockFile lockFile(tmpDir + "/alertme.lock");
 
-    QTcpServer mytcp;
-    QTcpSocket mysocket;
+    if(!lockFile.tryLock(100))
+    {
+        return 1;
+    }
+    else
+    {
+        QApplication a(argc, argv);
+        QApplication::setStyle(QStyleFactory::create("Fusion"));
+        MainWindow w;
+        w.setWindowFlags ( Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+        w.hide();
 
-    return a.exec();
+        QTcpServer mytcp;
+        QTcpSocket mysocket;
+
+        return a.exec();
+    }
 }
