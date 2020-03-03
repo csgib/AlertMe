@@ -43,15 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     trayIcon = new QSystemTrayIcon(this);
     QIcon icon(":/new/prefix1/Images/icon.png");
     trayIcon->setIcon(icon);
-
-    QMenu* stmenu = new QMenu(this);
-
-    QAction* actTexte1 = new QAction("Afficher l'application",this);
-    actTexte1->setIcon(QIcon(":/new/prefix1/Images/showico.png"));
-    stmenu->addAction(actTexte1);
-    connect(actTexte1, SIGNAL(triggered()), this, SLOT(display_interface()));
-
-    trayIcon->setContextMenu(stmenu);
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(display_interface()));
     trayIcon->show();
 
     ui->setupUi(this);
@@ -64,12 +56,14 @@ MainWindow::MainWindow(QWidget *parent)
         wg_conf_host_data = "127.0.0.1";
         wg_local_port = "1976";
         wg_open_start = "0";
+        wg_open_popup = "0";
     }
     else
     {
         wg_local_port = "";
         wg_conf_host_data = "";
         wg_open_start = "0";
+        wg_open_popup = "0";
 
         while (!file.atEnd())
         {
@@ -90,6 +84,11 @@ MainWindow::MainWindow(QWidget *parent)
             if ( wl_conf_txt.left(8) == "OPE_STRT" )
             {
                 wg_open_start = wl_conf_txt.right(wl_conf_txt.length()-9);
+            }
+
+            if ( wl_conf_txt.left(8) == "OPE_POPU" )
+            {
+                wg_open_popup = wl_conf_txt.right(wl_conf_txt.length()-9);
             }
         }
 
@@ -128,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    listen_server();
+    restart_server();
 
     guardian_timer = new QTimer(this);
     connect(guardian_timer, SIGNAL(timeout()), this, SLOT(listen_server()));
@@ -178,11 +177,6 @@ void MainWindow::httpDownloadFinished()
         ui->label_arp_ok->setText("Aucune donnée. Balayage plage IP.");
     }
 
-    if ( wg_open_start == "1" )
-    {
-
-    }
-
     ui->txttosend_free->setDisabled(true);
     ui->txttosend->setDisabled(true);
     ui->My_Combo_IP->setDisabled(true);
@@ -200,6 +194,15 @@ void MainWindow::httpDownloadFinished()
     {
         ui->Check_open_start->setChecked(false);
     }
+
+    if ( wg_open_popup == "1" )
+    {
+        ui->Check_open_popup->setChecked(true);
+    }
+    else
+    {
+        ui->Check_open_popup->setChecked(false);
+    }
 }
 
 // *** PARTIE SERVEUR ***
@@ -208,6 +211,8 @@ void MainWindow::listen_server()
 {
     if(!mytcpsrv->isListening())
     {
+        trayIcon->showMessage("ALERTE'ME","Le serveur d'écoute est arrété. Prochain test de redémarrage dans 60 secondes.", QSystemTrayIcon::Warning );
+
         QIcon iconoff(":/new/prefix1/Images/icon_off.png");
         trayIcon->setIcon(iconoff);
 
@@ -298,11 +303,29 @@ void MainWindow::srv_readyRead()
         }
     }
 
-    m_alert_dialog->setalerttxt(wl_txt_display);
-    m_alert_dialog->setWindowFlags ( Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint );
-    m_alert_dialog->setWindowState( m_alert_dialog->windowState() | Qt::WindowFullScreen);
-    m_alert_dialog->show();
-    m_alert_dialog->raise();
+    if ( wl_txt_display.left(7) == "[INDIV]" )
+    {
+        if ( wg_open_popup == "1" )
+        {
+            trayIcon->showMessage("ALERTE'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 10000000);
+        }
+        else
+        {
+            m_alert_dialog->setalerttxt(wl_txt_display.right(wl_txt_display.length()-7));
+            m_alert_dialog->setWindowFlags ( Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint );
+            m_alert_dialog->setWindowState( m_alert_dialog->windowState() | Qt::WindowFullScreen);
+            m_alert_dialog->show();
+            m_alert_dialog->raise();
+        }
+    }
+    else
+    {
+        m_alert_dialog->setalerttxt(wl_txt_display);
+        m_alert_dialog->setWindowFlags ( Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint );
+        m_alert_dialog->setWindowState( m_alert_dialog->windowState() | Qt::WindowFullScreen);
+        m_alert_dialog->show();
+        m_alert_dialog->raise();
+    }
 }
 
 void MainWindow::srv_bytesWritten(qint64)
@@ -327,7 +350,7 @@ void MainWindow::connected()
 
     if ( wg_type_message == 0 )
     {
-        textTemp = ui->txttosend->toPlainText().toLatin1();
+        textTemp = "[INDIV]" + ui->txttosend->toPlainText().toLatin1();
     }
     else
     {
@@ -394,6 +417,7 @@ void MainWindow::readyRead()
     }
     client_socket->disconnectFromHost();
 }
+
 void MainWindow::bytesWritten(qint64)
 {
 }
@@ -445,7 +469,7 @@ void MainWindow::loop_message()
             }
         }
 
-        if(client_socket->waitForConnected(40))
+        if( client_socket->waitForConnected(40) )
         {
             ui->My_logs->appendHtml("UP : " + wl_ip_txt);
         }
@@ -620,7 +644,7 @@ void MainWindow::on_Mybt_saveconfig_clicked()
             QByteArray line_conf = file.readLine();
             QString wl_conf_txt = QString::fromLatin1(line_conf);
 
-            if ( wl_conf_txt.left(8) != "OPE_STRT" )
+            if ( wl_conf_txt.left(8) != "OPE_STRT" && wl_conf_txt.left(8) != "OPE_POPU" )
             {
                 wl_file_content += wl_conf_txt;
             }
@@ -631,10 +655,23 @@ void MainWindow::on_Mybt_saveconfig_clicked()
         if ( ui->Check_open_start->isChecked() )
         {
             wl_file_content += "OPE_STRT=1\n";
+            wg_open_start = "1";
         }
         else
         {
             wl_file_content += "OPE_STRT=0\n";
+            wg_open_start = "0";
+        }
+
+        if ( ui->Check_open_popup->isChecked() )
+        {
+            wl_file_content += "OPE_POPU=1\n";
+            wg_open_popup = "1";
+        }
+        else
+        {
+            wl_file_content += "OPE_POPU=0\n";
+            wg_open_popup = "0";
         }
 
         if (!file.open(QIODevice::ReadWrite | QIODevice::Text))

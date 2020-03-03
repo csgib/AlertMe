@@ -40,6 +40,7 @@ public:
     QString wg_full_ip;
     QString wg_ip_svq;
     QString wg_open_start;
+    QString wg_open_popup;
 
     QString wg_conf_host_data;
     QString wg_local_port;
@@ -86,15 +87,13 @@ private slots:
 
     // *** FICHIERS CONF ***
     void httpDownloadFinished();
-
     void on_Mybt_free_clicked();
-
     void on_Bt_admin_clicked();
-
     void on_Mybt_saveconfig_clicked();
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void activated(QSystemTrayIcon::ActivationReason);
 
 private:
     Ui::MainWindow *ui;

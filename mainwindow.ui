@@ -440,6 +440,22 @@ p, li { white-space: pre-wrap; }
         <normaloff>:/new/prefix1/Images/save.png</normaloff>:/new/prefix1/Images/save.png</iconset>
       </property>
      </widget>
+     <widget class="QCheckBox" name="Check_open_popup">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>511</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ouvrir les messages individuels sous forme de popup dans la zone de notification</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="Icon_server_status">
