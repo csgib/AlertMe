@@ -307,7 +307,7 @@ void MainWindow::srv_readyRead()
     {
         if ( wg_open_popup == "1" )
         {
-            trayIcon->showMessage("ALERT'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 10000000);
+            trayIcon->showMessage("ALERT'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 30000);
         }
         else
         {
