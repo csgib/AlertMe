@@ -16,5 +16,6 @@
         <file>Images/lock.png</file>
         <file>Images/configuration.png</file>
         <file>Images/save.png</file>
+        <file>Images/logs.png</file>
     </qresource>
 </RCC>

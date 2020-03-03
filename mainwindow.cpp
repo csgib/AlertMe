@@ -188,7 +188,7 @@ void MainWindow::httpDownloadFinished()
     if ( wg_open_start == "1" )
     {
         ui->Check_open_start->setChecked(true);
-        MainWindow::show();
+        display_interface();
     }
     else
     {
@@ -211,7 +211,7 @@ void MainWindow::listen_server()
 {
     if(!mytcpsrv->isListening())
     {
-        trayIcon->showMessage("ALERTE'ME","Le serveur d'écoute est arrété. Prochain test de redémarrage dans 60 secondes.", QSystemTrayIcon::Warning );
+        trayIcon->showMessage("ALERT'ME","Le serveur d'écoute est arrété. Prochain test de redémarrage dans 60 secondes.", QSystemTrayIcon::Warning );
 
         QIcon iconoff(":/new/prefix1/Images/icon_off.png");
         trayIcon->setIcon(iconoff);
@@ -307,7 +307,7 @@ void MainWindow::srv_readyRead()
     {
         if ( wg_open_popup == "1" )
         {
-            trayIcon->showMessage("ALERTE'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 10000000);
+            trayIcon->showMessage("ALERT'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 10000000);
         }
         else
         {
@@ -521,6 +521,7 @@ MainWindow::~MainWindow()
 void MainWindow::display_interface()
 {
     this->show();
+    this->raise();
 }
 
 void MainWindow::on_Bt_close_ui_clicked()
