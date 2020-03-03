@@ -275,7 +275,7 @@ p, li { white-space: pre-wrap; }
     <widget class="QWidget" name="tab_3">
      <attribute name="icon">
       <iconset resource="Ressources.qrc">
-       <normaloff>:/new/prefix1/Images/srv_ok.png</normaloff>:/new/prefix1/Images/srv_ok.png</iconset>
+       <normaloff>:/new/prefix1/Images/logs.png</normaloff>:/new/prefix1/Images/logs.png</iconset>
      </attribute>
      <attribute name="title">
       <string>Logs</string>
