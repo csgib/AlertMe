@@ -179,8 +179,16 @@ void MainWindow::httpDownloadFinished()
                 ui->My_Combo_IP->addItem(wl_data[1] + " -> " + wl_data[0]);
             }
         }
-        ui->label_arp_ok->setText(QString::number(ui->My_Combo_IP->count()) + " IP clientes récupérées");
-        ui->tabWidget->setTabVisible(1,true);
+
+        if ( ui->My_Combo_IP->count() > 0 )
+        {
+            ui->label_arp_ok->setText(QString::number(ui->My_Combo_IP->count()) + " IP clientes récupérées");
+            ui->tabWidget->setTabVisible(1,true);
+        }
+        else
+        {
+            ui->label_arp_ok->setText("Aucune donnée. Balayage plage IP.");
+        }
     }
     else
     {
