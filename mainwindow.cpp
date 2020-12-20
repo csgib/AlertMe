@@ -128,6 +128,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     if ( wl_myip == "" )
     {
+        ui->label_ip_listen->setText("127.0.0.1");
         QMessageBox msgBox;
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.setText("Aucune carte réseau active détectée. Vous ne pourrez ni envoyer de message ni en recevoir");
