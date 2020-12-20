@@ -202,6 +202,9 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <attribute name="icon">
       <iconset resource="Ressources.qrc">
        <normaloff>:/new/prefix1/Images/intrusion.png</normaloff>:/new/prefix1/Images/intrusion.png</iconset>
@@ -348,7 +351,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="text">
-       <string>Ouvrir les messages individuels sous forme de popup dans la zone de notification</string>
+       <string>Ouvrir les messages individuels sous forme de popup</string>
       </property>
       <property name="checked">
        <bool>true</bool>

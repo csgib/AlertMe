@@ -129,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent)
     if ( wl_myip == "" )
     {
         QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setIcon(QMessageBox::Critical);
         msgBox.setText("Aucune carte réseau active détectée. Vous ne pourrez ni envoyer de message ni en recevoir");
         msgBox.exec();
     }
@@ -296,7 +296,7 @@ void MainWindow::srv_readyRead()
 
     if ( wl_txt_display.left(7) == "[SOUN1]" )
     {
-        sound_alarm->setLoops(4);
+        sound_alarm->setLoops(10);
         sound_alarm->play();
 
         wl_txt_display = wl_txt_display.right(wl_txt_display.length()-7);
@@ -305,7 +305,7 @@ void MainWindow::srv_readyRead()
     {
         if ( wl_txt_display.left(7) == "[SOUN2]" )
         {
-            sound_pinpon->setLoops(8);
+            sound_pinpon->setLoops(16);
             sound_pinpon->play();
 
             wl_txt_display = wl_txt_display.right(wl_txt_display.length()-7);
@@ -317,9 +317,9 @@ void MainWindow::srv_readyRead()
         if ( wg_open_popup == "1" )
         {
             QMessageBox msgBox;
+            msgBox.setIcon(QMessageBox::Information);
             msgBox.setText(wl_txt_display.right(wl_txt_display.length()-7));
             msgBox.exec();
-            //trayIcon->showMessage("ALERT'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 30000);
         }
         else
         {
