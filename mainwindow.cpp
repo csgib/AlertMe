@@ -100,11 +100,9 @@ MainWindow::MainWindow(QWidget *parent)
         if ( wg_local_port == "" )
         {
             wg_local_port = "1976";
-        }
-
-        ui->label_tcp_port->setText(wg_local_port);
+        } 
     }
-
+    ui->label_tcp_port->setText(wg_local_port);
     //
 
     QString wl_myip = "";
