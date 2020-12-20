@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     trayIcon->show();
 
     ui->setupUi(this);
+    ui->tabWidget->setTabVisible(1,false);
 
     // *** LECTURE FICHIER CONFIGURATION ***
     QFile file(QCoreApplication::applicationDirPath() + "/config.ini");
@@ -125,6 +126,14 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    if ( wl_myip == "" )
+    {
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setText("Aucune carte réseau active détectée. Vous ne pourrez ni envoyer de message ni en recevoir");
+        msgBox.exec();
+    }
+
     restart_server();
 
     guardian_timer = new QTimer(this);
@@ -154,6 +163,7 @@ void MainWindow::httpDownloadFinished()
 {
     if( reply->error() == QNetworkReply::NoError )
     {
+
         QString wl_file_content = reply->readAll();
         wl_file_content = wl_file_content.remove(QRegExp("[\\n\\t\\r]"));
         wg_file_liste = wl_file_content.split(";");
@@ -169,6 +179,7 @@ void MainWindow::httpDownloadFinished()
             }
         }
         ui->label_arp_ok->setText(QString::number(ui->My_Combo_IP->count()) + " IP clientes récupérées");
+        ui->tabWidget->setTabVisible(1,true);
     }
     else
     {
@@ -305,7 +316,10 @@ void MainWindow::srv_readyRead()
     {
         if ( wg_open_popup == "1" )
         {
-            trayIcon->showMessage("ALERT'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 30000);
+            QMessageBox msgBox;
+            msgBox.setText(wl_txt_display.right(wl_txt_display.length()-7));
+            msgBox.exec();
+            //trayIcon->showMessage("ALERT'ME",wl_txt_display.right(wl_txt_display.length()-7), QSystemTrayIcon::Information, 30000);
         }
         else
         {
@@ -428,7 +442,7 @@ void MainWindow::loop_message()
     {
         ui->Pb_send->setValue(wg_octet);
         QString wl_ip_txt = "";
-        if ( wg_file_liste.count() > 0 && wg_type_message != 0 )
+        if ( ui->My_Combo_IP->count() > 0 && wg_type_message != 0 )
         {
             QStringList wl_data = wg_file_liste[wg_octet-1].split("|");
             if ( wl_data.count() == 2 && wg_full_ip != wl_data[0] )
@@ -482,6 +496,7 @@ void MainWindow::loop_message()
 void MainWindow::loop_ip()
 {
     wg_octet++;
+
     if ( wg_octet < wg_loop_max )
     {
         QTimer::singleShot(4, this, SLOT(loop_message()));
@@ -534,7 +549,7 @@ void MainWindow::on_Mybt_intrusion_clicked()
     ui->tabWidget->setDisabled(true);
     wg_octet = 1;
     wg_type_message = 1;
-    if ( wg_file_liste.count() > 0 )
+    if ( ui->My_Combo_IP->count() > 0 )
     {
         wg_loop_max = wg_file_liste.count();
     }
