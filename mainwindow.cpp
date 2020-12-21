@@ -577,7 +577,7 @@ void MainWindow::on_Mybt_incendie_clicked()
     ui->tabWidget->setDisabled(true);
     wg_octet = 1;
     wg_type_message = 2;
-    if ( wg_file_liste.count() > 0 )
+    if ( ui->My_Combo_IP->count() > 0 )
     {
         wg_loop_max = wg_file_liste.count();
     }
